@@ -1,0 +1,4 @@
+@extends('layout') @section('content')
+<div class="page-heading"><div><h1>ประวัติการขาย</h1><p>ตรวจสอบใบเสร็จและรายการขายที่ผ่านมา</p></div><a class="btn" href="/pos">เริ่มขายสินค้า</a></div>
+<div class="card"><div class="table-wrap"><table><thead><tr><th>เลขที่ใบเสร็จ</th><th>ลูกค้า</th><th class="text-right">ยอดขาย</th><th>วิธีชำระเงิน</th><th>วันและเวลา</th></tr></thead><tbody>@forelse($sales as $s)<tr><td><a href="/sales/{{ $s->id }}">{{ $s->receipt_no }}</a></td><td>{{ $s->customer_name }}</td><td class="text-right">{{ number_format($s->total,2) }} บาท</td><td>{{ ['cash'=>'เงินสด','transfer'=>'โอนเงิน','card'=>'บัตร'][$s->payment_method] ?? $s->payment_method }}</td><td>{{ $s->created_at }}</td></tr>@empty<tr><td colspan="5" class="empty-state">ยังไม่มีรายการขาย</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $sales->links() }}</div></div>
+@endsection

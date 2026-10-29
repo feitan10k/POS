@@ -1,0 +1,5 @@
+@extends('layout') @section('content')
+<div class="page-heading"><div><h1>สมาชิก</h1><p>จัดเก็บข้อมูลและคะแนนสะสมของลูกค้า</p></div></div>
+<div class="card"><h2>เพิ่มสมาชิก</h2><form method="post" action="/customers" class="form-row">@csrf<input name="name" placeholder="ชื่อสมาชิก" aria-label="ชื่อสมาชิก" required><input name="phone" placeholder="เบอร์โทรศัพท์" aria-label="เบอร์โทรศัพท์"><button type="submit">เพิ่มสมาชิก</button></form></div>
+<div class="card"><h2>รายชื่อสมาชิก</h2><div class="table-wrap"><table><thead><tr><th>ชื่อสมาชิก</th><th>เบอร์โทรศัพท์</th><th class="text-right">คะแนนสะสม</th><th>วันที่สมัคร</th></tr></thead><tbody>@forelse($customers as $c)<tr><td>{{ $c->name }}</td><td>{{ $c->phone ?: '—' }}</td><td class="text-right">{{ number_format($c->points) }}</td><td>{{ $c->created_at }}</td></tr>@empty<tr><td colspan="4" class="empty-state">ยังไม่มีสมาชิก</td></tr>@endforelse</tbody></table></div><div class="pagination">{{ $customers->links() }}</div></div>
+@endsection
